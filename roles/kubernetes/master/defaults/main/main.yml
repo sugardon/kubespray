@@ -2,15 +2,8 @@
 # disable upgrade cluster
 upgrade_cluster_setup: false
 
-# Enable kubeadm experimental control plane
-kubeadm_control_plane: false
-
 # Experimental kubeadm etcd deployment mode. Available only for new deployment
 etcd_kubeadm_enabled: false
-
-# An experimental dev/test only dynamic volumes provisioner,
-# for PetSets. Works for kube>=v1.3 only.
-kube_hostpath_dynamic_provisioner: "false"
 
 # change to 0.0.0.0 to enable insecure access from anywhere (not recommended)
 kube_apiserver_insecure_bind_address: 127.0.0.1
@@ -34,6 +27,13 @@ kube_etcd_key_file: node-{{ inventory_hostname }}-key.pem
 # CLI/web clients.
 kube_controller_manager_bind_address: 0.0.0.0
 kube_scheduler_bind_address: 0.0.0.0
+
+# Leader election lease durations and timeouts for scheduler and controller-manager
+kube_controller_manager_leader_elect_lease_duration: 15s
+kube_controller_manager_leader_elect_renew_deadline: 10s
+
+kube_scheduler_leader_elect_lease_duration: 15s
+kube_scheduler_leader_elect_renew_deadline: 10s
 
 # discovery_timeout modifies the discovery timeout
 discovery_timeout: 5m0s
@@ -79,27 +79,15 @@ kubernetes_audit_webhook: false
 # path to audit webhook config file
 audit_webhook_config_file: "{{ kube_config_dir }}/audit-policy/apiserver-audit-webhook-config.yaml"
 audit_webhook_server_url: "https://audit.app"
+audit_webhook_server_extra_args: {}
 audit_webhook_mode: batch
 audit_webhook_batch_max_size: 100
 audit_webhook_batch_max_wait: 1s
 
-# Limits for kube components
-kube_controller_memory_limit: 512M
-kube_controller_cpu_limit: 250m
-kube_controller_memory_requests: 100M
-kube_controller_cpu_requests: 100m
 kube_controller_node_monitor_grace_period: 40s
 kube_controller_node_monitor_period: 5s
 kube_controller_pod_eviction_timeout: 5m0s
 kube_controller_terminated_pod_gc_threshold: 12500
-kube_scheduler_memory_limit: 512M
-kube_scheduler_cpu_limit: 250m
-kube_scheduler_memory_requests: 170M
-kube_scheduler_cpu_requests: 80m
-kube_apiserver_memory_limit: 2000M
-kube_apiserver_cpu_limit: 800m
-kube_apiserver_memory_requests: 256M
-kube_apiserver_cpu_requests: 100m
 kube_apiserver_request_timeout: "1m0s"
 
 # 1.10+ admission plugins
@@ -112,7 +100,6 @@ kube_apiserver_disable_admission_plugins: []
 kube_api_runtime_config: []
 
 ## Enable/Disable Kube API Server Authentication Methods
-kube_basic_auth: false
 kube_token_auth: false
 kube_oidc_auth: false
 kube_webhook_token_auth: false
@@ -206,3 +193,5 @@ secrets_encryption_query: "resources[*].providers[0].{{kube_encryption_algorithm
 
 ## Amount of time to retain events. (default 1h0m0s)
 event_ttl_duration: "1h0m0s"
+##  Force regeneration of kubernetes control plane certificates without the need of bumping the cluster version
+force_certificate_regeneration: false

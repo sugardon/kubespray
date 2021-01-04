@@ -54,7 +54,7 @@
 - name: Configure extras repository on RedHat/CentOS if container-selinux is not available in current repos
   yum_repository:
     name: extras
-    description: "CentOS-7 - Extras"
+    description: "CentOS-{{ ansible_distribution_major_version }} - Extras"
     state: present
     baseurl: "{{ extras_rh_repo_base_url }}"
     file: "extras"
@@ -65,18 +65,3 @@
   when:
     - ansible_distribution in ["CentOS","RedHat"]
     - yum_result.results | length == 0
-
-- name: Copy yum.conf for editing
-  copy:
-    src: "{{ yum_conf }}"
-    dest: "{{ containerd_yum_conf }}"
-    remote_src: yes
-  when: ansible_distribution in ["CentOS","RedHat"]
-
-- name: Edit copy of yum.conf to set obsoletes=0
-  lineinfile:
-    path: "{{ containerd_yum_conf }}"
-    state: present
-    regexp: '^obsoletes='
-    line: 'obsoletes=0'
-  when: ansible_distribution in ["CentOS","RedHat"]
