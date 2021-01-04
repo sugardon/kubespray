@@ -23,6 +23,7 @@ inventory/*
 !inventory/sample
 inventory/*/artifacts/
 !inventory/sugardon01
+!inventory/sugardon02
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

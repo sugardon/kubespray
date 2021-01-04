@@ -1,0 +1,26 @@
+all:
+  hosts:
+    sugardon02-jn01:
+      ansible_host: 192.168.21.11
+      ip: 192.168.21.11
+      access_ip: 192.168.21.11
+    sugardon02-rp01:
+      ansible_host: 192.168.21.12
+      ip: 192.168.21.12
+      access_ip: 192.168.21.12
+  children:
+    kube-master:
+      hosts:
+        sugardon02-rp01:
+    kube-node:
+      hosts:
+        sugardon02-jn01:
+    etcd:
+      hosts:
+        sugardon02-rp01:
+    k8s-cluster:
+      children:
+        kube-master:
+        kube-node:
+    calico-rr:
+      hosts: {}
