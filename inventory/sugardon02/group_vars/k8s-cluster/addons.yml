@@ -80,7 +80,11 @@ rbd_provisioner_enabled: false
 # rbd_provisioner_reclaim_policy: Delete
 
 # Nginx ingress controller deployment
-ingress_nginx_enabled: false
+ingress_nginx_enabled: true
+
+# cf. https://github.com/kubernetes-sigs/kubespray/issues/4357
+ingress_nginx_host_network: true
+
 # ingress_nginx_host_network: false
 ingress_publish_status_address: ""
 # ingress_nginx_nodeselector:
@@ -90,9 +94,9 @@ ingress_publish_status_address: ""
 #     operator: "Equal"
 #     value: ""
 #     effect: "NoSchedule"
-# ingress_nginx_namespace: "ingress-nginx"
-# ingress_nginx_insecure_port: 80
-# ingress_nginx_secure_port: 443
+ingress_nginx_namespace: "ingress-nginx"
+ingress_nginx_insecure_port: 80
+ingress_nginx_secure_port: 443
 # ingress_nginx_configmap:
 #   map-hash-bucket-size: "128"
 #   ssl-protocols: "SSLv2"
@@ -102,6 +106,8 @@ ingress_publish_status_address: ""
 #   53: "kube-system/coredns:53"
 # ingress_nginx_extra_args:
 #   - --default-ssl-certificate=default/foo-tls
+ingress_nginx_extra_args:
+  - --enable-ssl-passthrough
 
 # ambassador ingress controller deployment
 ingress_ambassador_enabled: false
@@ -121,7 +127,7 @@ cert_manager_enabled: false
 # cert_manager_namespace: "cert-manager"
 
 # MetalLB deployment
-metallb_enabled: false
+metallb_enabled: true
 # metallb_ip_range:
 #   - "10.5.0.50-10.5.0.99"
 # metallb_version: v0.9.3
@@ -143,3 +149,19 @@ metallb_enabled: false
 #   - peer_address: 192.0.2.2
 #     peer_asn: 64513
 #     my_asn: 4200000000
+metallb_ip_range:
+  - "192.168.21.50-192.168.21.99"
+metallb_protocol: layer2
+metallb_auto_assign: true
+metallb_avoid_buggy_ips: true
+metallb_peers:
+  - peer_address: 192.168.21.1
+    peer_asn: 65501
+    my_asn: 65502
+metallb_additional_address_pools:
+  bgp_pool:
+    ip_range:
+      - "192.168.31.0/24"
+    protocol: bgp
+    auto_assign: false
+    avoid_buggy_ips: true

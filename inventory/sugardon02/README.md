@@ -20,7 +20,7 @@ $ ansible-playbook -i inventory/sugardon02/hosts.yaml cluster.yml --become --use
 Create Ingress Service
 
 ```bash
-$ kubectl apply -f inventory/sugardon01/ingress-nginx-service.yaml
+$ kubectl apply -f inventory/sugardon02/ingress-nginx-service.yaml
 ```
 
 ## Setup tekton pipeline
