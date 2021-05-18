@@ -22,7 +22,10 @@ inventory/*
 !inventory/local
 !inventory/sample
 inventory/*/artifacts/
+# My Cluster
+.ssh
 !inventory/sugardon01
+!inventory/sugardon01-old
 !inventory/sugardon02
 
 # Byte-compiled / optimized / DLL files

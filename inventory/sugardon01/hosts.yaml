@@ -1,13 +1,16 @@
 all:
+  # Doc
+  # https://github.com/kubernetes-sigs/kubespray/blob/master/docs/vars.md
   hosts:
     master01:
-      ansible_host: 172.18.60.18
-      ip: 172.18.60.18
-      access_ip: 172.18.60.18
+      ansible_host: 192.168.120.12
+      ip: 192.168.120.12
+      access_ip: 192.168.120.12
+      etcd_member_name: etcd01
     worker01:
-      ansible_host: 172.18.60.23
-      ip: 172.18.60.23
-      access_ip: 172.18.60.23
+      ansible_host: 192.168.120.13
+      ip: 192.168.120.13
+      access_ip: 192.168.120.13
   children:
     kube-master:
       hosts:
