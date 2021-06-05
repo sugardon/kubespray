@@ -11,6 +11,10 @@ all:
       ansible_host: 192.168.120.13
       ip: 192.168.120.13
       access_ip: 192.168.120.13
+    worker02:
+      ansible_host: 192.168.120.14
+      ip: 192.168.120.14
+      access_ip: 192.168.120.14
   children:
     kube-master:
       hosts:
@@ -18,6 +22,7 @@ all:
     kube-node:
       hosts:
         worker01:
+        worker02:
     etcd:
       hosts:
         master01:

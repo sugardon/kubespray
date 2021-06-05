@@ -6,8 +6,8 @@ $ ANSIBLE_CONFIG=inventory/sugardon01/ansible.cfg ansible-playbook -i inventory/
 
 ## Config
 
-ref. 
-https://medium.com/@leonardo.bueno/setting-up-a-kubernetes-cluster-with-kubespray-1bf4ce8ccd73
+ref.
+<https://medium.com/@leonardo.bueno/setting-up-a-kubernetes-cluster-with-kubespray-1bf4ce8ccd73>
 
 ### ./group_vars/k8s_cluster/k8s-cluster.yml
 
@@ -32,6 +32,7 @@ calico_ip_auto_method: "interface=ens4"
 ```
 
 ### ./group_vars/all/all.yml
+
 ```bash
 ## Internal loadbalancers for apiservers
 loadbalancer_apiserver_localhost: true
